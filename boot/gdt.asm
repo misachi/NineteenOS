@@ -15,7 +15,7 @@ code_seg:               ; code segment descriptor of GDT
 
 data_seg:               ; Data segment decriptor of GDT. 
                         ; Begins after 16bytes of memory
-    dw 0 xffff          ; Limit ( bits 0 -15)
+    dw 0xffff           ; Limit ( bits 0 -15)
     dw 0x0              ; Base ( bits 0 -15)
     db 0x0              ; Base ( bits 16 -23)
     db 10010010b        ; 1st flags , type flags
