@@ -15,7 +15,7 @@ start_switch:               ; Begin the swith to 32-bit Protected mode(PM)
                             ; moving to PM mode. 0x08 is the offset for the code descriptor. This sets
                             ; the cs registers as well
 
-[bits 32]
+[bits 32]                   ; We are now in 32-bit Protected Mode
 
 pm_mode:                    ; Re-assign the segments appropriately. The segments assigned as previously
                             ; won't work as expected in PM mode. This means we have to manually re-assign
@@ -28,5 +28,7 @@ pm_mode:                    ; Re-assign the segments appropriately. The segments
     mov fs, ax
     mov gs, ax
 
-    mov ebp, 0x90000h       ; stack begins from 90000h
+    mov ebp, 0x90000        ; stack begins from 90000h
     mov esp, ebp
+
+    call begin_pm
