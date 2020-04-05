@@ -6,21 +6,21 @@ null_seg:               ; null segment descriptor of GDT
 
 code_seg:               ; code segment descriptor of GDT
                         ; Should begin at offset 0x8 i.e after 8 bytes form beginning
-    dw 0 xffff          ; Limit ( bits 0 -15)
-    dw 0 x0             ; Base ( bits 0 -15)
-    db 0 x0             ; Base ( bits 16 -23)
-    db 10011010 b       ; 1st flags , type flags
-    db 11001111 b       ; 2nd flags , Limit ( bits 16 -19)
-    db 0 x0             ; Base ( bits 24 -31)
+    dw 0xffff           ; Limit ( bits 0 -15)
+    dw 0x0              ; Base ( bits 0 -15)
+    db 0x0              ; Base ( bits 16 -23)
+    db 10011010b        ; 1st flags , type flags
+    db 11001111b        ; 2nd flags , Limit ( bits 16 -19)
+    db 0x0              ; Base ( bits 24 -31)
 
 data_seg:               ; Data segment decriptor of GDT. 
                         ; Begins after 16bytes of memory
     dw 0 xffff          ; Limit ( bits 0 -15)
-    dw 0 x0             ; Base ( bits 0 -15)
-    db 0 x0             ; Base ( bits 16 -23)
-    db 10010010 b       ; 1st flags , type flags
-    db 11001111 b       ; 2nd flags , Limit ( bits 16 -19)
-    db 0 x0             ; Base ( bits 24 -31)
+    dw 0x0              ; Base ( bits 0 -15)
+    db 0x0              ; Base ( bits 16 -23)
+    db 10010010b        ; 1st flags , type flags
+    db 11001111b        ; 2nd flags , Limit ( bits 16 -19)
+    db 0x0              ; Base ( bits 24 -31)
 
 end_gdt:
 
