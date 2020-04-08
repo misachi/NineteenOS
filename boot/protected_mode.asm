@@ -1,5 +1,4 @@
 [bits 16]                   ; We are still in 16-bit Real Mode
-%include "gdt.asm"          ; Import our table
 
 start_switch:               ; Begin the swith to 32-bit Protected mode(PM)
     cli                     ; Stop all interrupts
