@@ -1,5 +1,9 @@
 # Borrowed from https://github.com/cfenollosa/os-tutorial/blob/master/13-kernel-barebones/Makefile
 
+# Install cross-compiler on MacOs using brew
+# brew tap nativeos/i386-elf-toolchain
+# brew install i386-elf-binutils i386-elf-gcc
+
 # $@ = target file
 # $< = first dependency
 # $^ = all dependencies
