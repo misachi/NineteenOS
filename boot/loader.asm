@@ -42,11 +42,11 @@ begin_pm:
 
     jmp $                            ; Loop forever
 
-%include "print_string.asm"
-%include "gdt.asm"          
-%include "print_string_pm.asm"
-%include "protected_mode.asm"
-%include "read_disk.asm"
+%include "boot/print_string.asm"
+%include "boot/gdt.asm"
+%include "boot/print_string_pm.asm"
+%include "boot/protected_mode.asm"
+%include "boot/read_disk.asm"
 
 BOOT_DRIVE         db      0
 real_mode_msg      db      "==> Booted in Real Mode", 0
