@@ -43,7 +43,7 @@ begin_pm:
 
     jmp $                               ; Loop forever
 
-%include "boot/print_string.asm"         ; 16bit print
+%include "boot/print_string.asm"        ; 16bit print
 %include "boot/gdt.asm"
 %include "boot/print_string_pm.asm"     ; 32bit mode
 %include "boot/protected_mode.asm"
@@ -51,7 +51,7 @@ begin_pm:
 
 BOOT_DRIVE         db      0
 real_mode_msg      db      "==> Booted in Real Mode", 0
-protected_mode_msg db      "==> Switched to Protected Mode", 0
+protected_mode_msg db      0x0A, "==> Switched to Protected Mode", 0
 
     times 510-($-$$) db 0 
 
