@@ -29,7 +29,7 @@ os.image: boot_sect.bin kernel.bin
 
 run: os.image
 	# qemu-system-i386 -f -drive format=raw,file=$<
-	qemu-system-i386 -fda $<
+	qemu-system-i386 -d guest_errors -fda $<
 
 clean:
 	-rm *.bin *.o *.dis *.image

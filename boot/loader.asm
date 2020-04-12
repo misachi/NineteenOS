@@ -6,6 +6,7 @@
 [org 0x7c00]                      ; sets the start address
 
     mov [BOOT_DRIVE], dl
+
     mov bp, 0x9000                ; Our boot sector stack here at 9000h
     mov sp, bp
 
@@ -40,18 +41,17 @@ begin_pm:
 
     call 0x1000
 
-    jmp $                            ; Loop forever
+    jmp $                               ; Loop forever
 
-%include "boot/print_string.asm"
+%include "boot/print_string.asm"         ; 16bit print
 %include "boot/gdt.asm"
-%include "boot/print_string_pm.asm"
+%include "boot/print_string_pm.asm"     ; 32bit mode
 %include "boot/protected_mode.asm"
 %include "boot/read_disk.asm"
 
 BOOT_DRIVE         db      0
 real_mode_msg      db      "==> Booted in Real Mode", 0
-protected_mode_msg db      "==> Successfully switched to Protected Mode", 0
-kernel_load_msg    db      "==> Loading Kernel...", 0
+protected_mode_msg db      "==> Switched to Protected Mode", 0
 
     times 510-($-$$) db 0 
 

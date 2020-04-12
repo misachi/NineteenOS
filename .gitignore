@@ -36,6 +36,7 @@
 *.x86_64
 *.hex
 *.bin
+*.image
 
 # Debug files
 *.dSYM/
@@ -51,3 +52,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+*.old
+
+# Mac files
+.DS_Store
