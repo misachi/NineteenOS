@@ -58,5 +58,5 @@ hang:
     jmp $
 
 kernel_load_msg     db      "==> Loading Kernel...", 0
-disk_error_msg      db      "Error while reading disk", 0
-sector_error_msg    db      "Sector read and requested do not match", 0
+disk_error_msg      db      "Disk error", 0
+sector_error_msg    db      "Sector read and requested mismatch", 0

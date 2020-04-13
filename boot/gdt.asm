@@ -32,4 +32,4 @@ gdtr_reg:
 
     dw end_gdt - null_seg - 1   ; Size of GDT
     dd null_seg                 ; Start of GDT(Base)
-    
+
