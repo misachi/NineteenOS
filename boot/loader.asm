@@ -51,7 +51,7 @@ begin_pm:
 
 BOOT_DRIVE         db      0
 real_mode_msg      db      "==> Real Mode", 0
-protected_mode_msg db      0x0A, "Switched to Protected Mode", 0
+protected_mode_msg db      0x0A, 0x0A, "Switched to Protected Mode", 0
 
     times 510-($-$$) db 0 
 

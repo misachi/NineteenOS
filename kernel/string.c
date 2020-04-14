@@ -1,5 +1,5 @@
-#include "stdint.h"
-#include "string.h"
+#include "include/stdint.h"
+#include "include/string.h"
 
 void *memcopy(char *str1, const char *str2, const int8_t n)
 {

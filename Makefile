@@ -12,13 +12,19 @@
 all: run
 
 # Notice how dependencies are built as needed
-kernel.bin: entry.o kernel.o
+kernel.bin: entry.o stdio.o string.o kernel.o
 	i386-elf-ld -o $@ -Ttext 0x1000 $^ --oformat binary
 
 entry.o: boot/entry.asm
 	nasm $< -f elf -o $@
 
-kernel.o: kernel/kernel.c
+stdio.o: kernel/stdio.c
+	i386-elf-gcc -ffreestanding -c $< -o stdio.o
+
+string.o: kernel/string.c
+	i386-elf-gcc -ffreestanding -c $< -o string.o
+
+kernel.o: kernel/main.c
 	i386-elf-gcc -ffreestanding -c $< -o $@
 
 boot_sect.bin: boot/loader.asm

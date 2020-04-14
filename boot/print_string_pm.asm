@@ -100,7 +100,6 @@ mov_cur:
     mov dx, 0x03D5
     out dx, al
 
-    xor	eax, eax
     mov al, 0x0e
     mov dx, 0x03D4
     out dx, al
