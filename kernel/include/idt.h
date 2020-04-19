@@ -1,4 +1,6 @@
-#include "include/stdint.h"
+#ifndef IDT_H
+#define IDT_H
+#include <stdint.h>
 
 // interrupt descriptor
 struct idt_entry {
@@ -31,4 +33,5 @@ struct idtr {
 } __attribute__((packed));
 
 struct idt_entry idt[256];
-struct idt_ptr idtp
+struct idt_ptr idtp;
+#endif

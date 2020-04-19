@@ -1,10 +1,12 @@
+#ifndef SCREEN_H
+#define SCREEN_H
+
 # define VIDEO_ADDRESS 0xb8000
 # define MAX_ROWS 25
 # define MAX_COLS 80
-
 # define WHITE_ON_BLACK 0x0f  // Write white on black background
 
-# include "stdint.h"
+# include <stdint.h>
 
 // Use inline assembly to access device driver ports
 // Read and write data to devices
@@ -34,3 +36,5 @@ void port_word_out(unsigned short port, unsigned short data)
 {
     __asm__("out %%ax ,%%dx " : : "a"(data), "d"(port));
 }
+
+#endif

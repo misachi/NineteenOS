@@ -1,5 +1,4 @@
-#include "include/stdint.h"
-#include "include/string.h"
+#include <string.h>
 
 void *memcopy(char *str1, const char *str2, const int8_t n)
 {
@@ -19,7 +18,7 @@ int8_t strlen(const char *str)
     return len;
 }
 
-void *memsetw(void *block, char c, int8_t n)
+void *memset(void *block, char c, int8_t n)
 {
     while(n)
     {

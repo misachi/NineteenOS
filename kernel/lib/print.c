@@ -1,5 +1,5 @@
-#include "include/screen.h"
-#include "include/string.h"
+#include <screen.h>
+#include <string.h>
 
 uint8_t _CUR_X = 0;
 uint8_t _CUR_Y = 0;
