@@ -43,11 +43,11 @@ begin_pm:
 
     jmp $                               ; Loop forever
 
-%include "boot/print_string.asm"        ; 16bit print
-%include "boot/gdt.asm"
-%include "boot/print_string_pm.asm"     ; 32bit mode
-%include "boot/protected_mode.asm"
-%include "boot/read_disk.asm"
+%include "src/boot/print_string.asm"        ; 16bit print
+%include "src/boot/gdt.asm"
+%include "src/boot/print_string_pm.asm"     ; 32bit mode
+%include "src/boot/protected_mode.asm"
+%include "src/boot/read_disk.asm"
 
 BOOT_DRIVE         db      0
 real_mode_msg      db      "==> Real Mode", 0

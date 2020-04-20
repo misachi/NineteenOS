@@ -33,5 +33,5 @@ struct idtr {
 } __attribute__((packed));
 
 struct idt_entry idt[256];
-struct idt_ptr idtp;
+struct idtr idtp;
 #endif

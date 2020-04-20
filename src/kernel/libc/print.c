@@ -51,7 +51,7 @@ void print_char(char c)
     mov_cursor();
 }
 
-void *print(char *str){
+void print(char *str){
     int8_t len = strlen(str);
     while(len)
     {
