@@ -52,7 +52,7 @@ void print_char(char c)
 }
 
 void print(char *str){
-    int8_t len = strlen(str);
+    uint8_t len = strlen(str);
     while(len)
     {
         print_char(*str);

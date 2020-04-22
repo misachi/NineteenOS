@@ -2,36 +2,52 @@
 #define IDT_H
 #include <stdint.h>
 
+#define MAX_IDT_ENTRY 256
+#define FLAG 0x8E
+
 // interrupt descriptor
 struct idt_entry {
  
-	// bits 0-16 of interrupt routine (ir) address
+	// bits 0-16 of interrupt routine address
 	uint16_t		base_lo;
  
 	// code selector in gdt
 	uint16_t		sel;
  
-	// reserved, shold be 0
+	// Always 0
 	uint8_t			reserved;
  
-	// bit flags. Set with flags above
+	// bit flags
 	uint8_t			flags;
  
-	// bits 16-32 of ir address
+	// bits 16-32 of interrupt routine address
 	uint16_t		base_hi;
 } __attribute__((packed));
 
+typedef void (*irq_handler)();
 
-// structure for the processors idtr register
 struct idtr {
  
-	// size of the interrupt descriptor table (idt)
+	// size of the idt
 	uint16_t		limit;
  
 	// base address of idt
 	uint32_t		base;
 } __attribute__((packed));
 
-struct idt_entry idt[256];
+struct idt_entry idt_entries[256];
+
+// Our IDT pointer register
 struct idtr idtp;
+
+// Load our IDT
+static void inline install_idt(void){
+	__asm__ volatile("lidt %0" :: "m" (idtp));
+}
+
+void idt_gate(uint8_t num, irq_handler irq, uint16_t sel, uint8_t flags);
+
+// Our default Interrupt Routine(in case NONE is provided)
+void default_handler();
+void initialize_idt(uint16_t sel);
 #endif
