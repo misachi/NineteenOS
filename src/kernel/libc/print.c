@@ -3,6 +3,7 @@
 
 uint8_t _CUR_X = 0;
 uint8_t _CUR_Y = 0;
+uint16_t *vid_memory = (uint16_t *)VIDEO_ADDRESS;
 
 void mov_cursor()
 {
@@ -35,7 +36,6 @@ void print_char(char c)
     }
     else if (c >= ' ')
     {
-        uint16_t *vid_memory = (uint16_t *)VIDEO_ADDRESS;
         uint16_t *temp = vid_memory + (_CUR_X + _CUR_Y * MAX_COLS); // Get position for character
         *temp = c | attr;   // Place the character in the position. Remembr attr is the colour byte and
                             // is in the upper byte. We combine with the character byte(lower byte)
@@ -58,5 +58,16 @@ void print(char *str){
         print_char(*str);
         str++;
         len--;
+    }
+}
+
+void clear_screen(void){
+    uint16_t len = 2 * MAX_COLS * MAX_ROWS;
+    uint16_t attributeByte = WHITE_ON_BLACK << 8;
+    uint16_t blank = 0x20 | (attributeByte);
+
+    while (len--)
+    {
+        vid_memory[len] = blank;
     }
 }

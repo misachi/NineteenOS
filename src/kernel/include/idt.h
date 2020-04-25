@@ -35,7 +35,7 @@ struct idtr {
 	uint32_t		base;
 } __attribute__((packed));
 
-struct idt_entry idt_entries[256];
+struct idt_entry IDT[256];
 
 // Our IDT pointer register
 struct idtr idtp;

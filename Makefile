@@ -25,16 +25,16 @@ CFLAGS := -m32 \
 
 all: run
 
-bin/kernel.bin: src/boot/entry.o ${OBJ}
+kernel.bin: src/boot/entry.o ${OBJ}
 	i386-elf-ld -o $@ -Ttext 0x1000 $^ --oformat binary
 
-bin/boot_sect.bin:
+boot_sect.bin:
 	nasm src/boot/loader.asm -f bin -o $@
 
-bin/os_image.bin: bin/boot_sect.bin bin/kernel.bin
+bin/os_image: boot_sect.bin kernel.bin
 	cat $^ > $@
 
-run: bin/os_image.bin
+run: bin/os_image
 	# qemu-system-i386 -f -drive format=raw,file=$<
 	qemu-system-i386 -d guest_errors -fda $<
 
@@ -48,4 +48,4 @@ run: bin/os_image.bin
 	nasm $< -f bin -o $@
 
 clean:
-	rm src/boot/*.o bin/*.bin ${OBJ}
+	rm src/boot/*.o *.bin ${OBJ}

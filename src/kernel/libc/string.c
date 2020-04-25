@@ -21,28 +21,25 @@ uint8_t strlen(const char *str)
 
 void memset8(char *block, char c, uint16_t n)
 {
-    while(*block)
+    while(n--)
     {
-        *block = c;
-        block++;
+        *block++ = c;
     }
 }
 
 void memset16(uint16_t *block, char c, uint16_t n)
 {
-    while(*block)
+    while(n--)
     {
-        *block = (uint16_t)c;
-        block++;
+        *block++ = (uint16_t)c;
     }
 }
 
 void memset64(uint64_t *block, char c, uint16_t n)
 {
-    while(*block)
+    while(n--)
     {
-        *block = (uint64_t)c;
-        block++;
+        *block++ = (uint64_t)c;
     }
 }
 
