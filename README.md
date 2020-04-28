@@ -13,7 +13,7 @@ Two ways to test the system
 
 i) Using binary image
 ```
-qemu-system-x86_64 bin/os_image
+qemu-system-x86_64 -d guest_errors -fda bin/os_image
 ```
 
 ii) Using make
