@@ -4,22 +4,22 @@
 void i86_initialize_pic()
 {
 // ICW1
-port_word_out(0x20, 0x11);
-port_word_out(0xA0, 0x11);
+port_byte_out(MASTER_COMMAND, 0x11);
+port_byte_out(SLAVE_COMMAND, 0x11);
 
 // ICW2
-port_word_out(0x21, 0x20);
-port_word_out(0xA1, 0x28);
+port_byte_out(MASTER_DATA, 0x20);
+port_byte_out(SLAVE_DATA, 0x28);
 
 // ICW3
-port_word_out(0x21, 0x00);
-port_word_out(0xA1, 0x00);
+port_byte_out(MASTER_DATA, 0x04);
+port_byte_out(SLAVE_DATA, 0x02);
 
 // ICW4
-port_word_out(0x21, 0x01);
-port_word_out(0xA1, 0x01);
+port_byte_out(MASTER_DATA, 0x01);
+port_byte_out(SLAVE_DATA, 0x01);
 
-// mask interrupts
-port_word_out(0x21, 0xff);
-port_word_out(0xA1, 0xff);
+// Use processor local APIC and the IOAPICC. Disable PIC
+port_byte_out(MASTER_DATA, 0xff);
+port_byte_out(SLAVE_DATA, 0xff);
 }
