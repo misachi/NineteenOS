@@ -7,7 +7,6 @@ NineteenOS is a kernel built for the x86 platform. This is a work in progress an
 - Make
 - GCC cross compiler
 - Nasm Assembler
-- Unix like environment(not yet tested on windows)
 
 ## Run
 Two ways to test the system
