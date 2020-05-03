@@ -5,7 +5,7 @@
 
 void default_handler()
 {
-    print("\tUnhandled exception Error");
+    print("\tUnhandled exception Error!!!");
     while(1);
 }
 

@@ -53,8 +53,8 @@ print_string_pm:
     mov edi, ebx
 
 .string_pm_loop:
-    mov ebx, [edi]              ; Set EBX to the next character
-    cmp ebx, 0                  ; Check if we are at the end the string
+    mov bl, [edi]              ; Set EBX to the next character
+    cmp bl, 0                  ; Check if we are at the end the string
     je .done                    ; If we are, the we are done printing and should return to caller
     call print_pm               ; Print the next character
     inc edi                     ; Get next character

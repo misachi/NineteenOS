@@ -17,7 +17,7 @@ reset_loop:
     mov ah, 0
     mov dl, 0       ; Our drive is floppy disk(drive number 0)
     int 0x13        ; Call BIOS interrupt to access disk
-    jmp  reset_loop      ; if carry flag is set, an error occurred,
+    jc  reset_loop      ; if carry flag is set, an error occurred,
                     ; Repeat process
 reset_done:
     popa
@@ -56,6 +56,8 @@ sector_mismatch:
 
 hang:
     jmp $
+
+%include "src/boot/Stage2/print_string.asm"        ; 16bit print
 
 kernel_load_msg     db      "==> Loading Kernel...", 0
 disk_error_msg      db      "Disk error", 0

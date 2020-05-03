@@ -25,11 +25,11 @@ CFLAGS := -m32 \
 
 all: run
 
-kernel.bin: src/boot/entry.o ${OBJ}
-	i386-elf-ld -o $@ -Ttext 0x1000 $^ --oformat binary
+kernel.bin: src/boot/Stage2/loader.o src/boot/Stage2/entry.o ${OBJ}
+	i386-elf-ld -o $@ -Ttext 0x7e00 $^ --oformat binary
 
-boot_sect.bin:
-	nasm src/boot/loader.asm -f bin -o $@
+boot_sect.bin: kernel.bin
+	nasm src/boot/Stage1/loader.asm -f bin -o $@
 
 bin/os_image: boot_sect.bin kernel.bin
 	cat $^ > $@
@@ -48,4 +48,4 @@ run: bin/os_image
 	nasm $< -f bin -o $@
 
 clean:
-	rm src/boot/*.o *.bin ${OBJ}
+	rm src/boot/Stage2/*.o *.bin ${OBJ}

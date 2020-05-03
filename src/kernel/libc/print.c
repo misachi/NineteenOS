@@ -16,7 +16,7 @@ void mov_cursor()
 
 void print_char(char c)
 {
-    uint16_t attr = WHITE_ON_BLACK << 8;
+    uint16_t attr = (CYAN << 4 | RED) << 8;  // Red on Cyan background
     if (c == '\n')
     {
         _CUR_Y++;
@@ -63,7 +63,7 @@ void print(char *str){
 
 void clear_screen(void){
     uint16_t len = 2 * MAX_COLS * MAX_ROWS;
-    uint16_t attributeByte = WHITE_ON_BLACK << 8;
+    uint16_t attributeByte = (CYAN << 4) << 8;  // Cyan background
     uint16_t blank = 0x20 | (attributeByte);
 
     while (len--)

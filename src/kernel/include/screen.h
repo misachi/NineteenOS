@@ -6,6 +6,23 @@
 # define MAX_COLS 80
 # define WHITE_ON_BLACK 0x0f  // Write white on black background
 
+# define BLACK      0
+# define BLUE       1
+# define GREEN      2
+# define CYAN       3
+# define RED        4
+# define Magenta    5
+# define BROWN      6
+# define LIGHTGRAY  7
+# define DARKGRAY   8
+# define LIGHTBLUE  9
+# define LIGHTGREEN 10
+# define LIGHTCYAN  11
+# define LIGHTRED   12
+# define LIGHTMAGENTA 13
+# define LIGHTBROWN 14
+# define WHITE      15
+
 # include <stdint.h>
 
 // Use inline assembly to access device driver ports
