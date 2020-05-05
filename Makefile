@@ -36,7 +36,7 @@ bin/os_image: boot_sect.bin kernel.bin
 
 run: bin/os_image
 	# qemu-system-i386 -f -drive format=raw,file=$<
-	qemu-system-i386 -d guest_errors -fda $<
+	qemu-system-i386 -m 1G,slots=4,maxmem=4G -d guest_errors -fda $<
 
 %.o: %.c
 	${CC} ${CFLAGS} -I ${INCLUDEDIRS} -c $< -o $@

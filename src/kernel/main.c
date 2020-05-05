@@ -1,15 +1,13 @@
-#include "stdio.h"
-#include "idt.h"
-
+#include <stdio.h>
+#include <idt.h>
+#include <multiboot.h>
 
 // This is the entry routine to the kernel. 
-void kernel_main() {
+void kernel_main(multiboot_info *memory_size){
+    uint32_t *count = (uint32_t *)0x8000;
     clear_screen();
-    char *str = "                            NineteenOS\n";
-    char *str2 = "                         Worlds simplest Operating Sytem Kernel\n";
-    char *str3 = "                         Built with ISO C and NASM Assembler";
-    print(str);
-    print(str2);
-    print(str3);
+    printf("\n\n\n                            NineteenOS\n");
+    printf("                         Worlds simplest Operating Sytem Kernel\n");
+    printf("                       Built with ISO C and NASM Assembler");
     initialize_idt(0x8);
 }

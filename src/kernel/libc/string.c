@@ -43,3 +43,9 @@ void memset64(uint64_t *block, char c, uint16_t n)
     }
 }
 
+char *strcpy(char *dest, const char *src) {
+	char *tmp = dest;
+
+	while ((*dest++ = *src++) != '\0');
+	return tmp;
+}

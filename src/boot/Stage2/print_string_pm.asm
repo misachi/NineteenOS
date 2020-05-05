@@ -2,7 +2,7 @@
 
 [bits 32]
 VIDEO_MEMORY        equ         0xb8000
-CHAR_ATTRIBUTE      equ         63                  ; the colour byte for each character(White on light blue)
+CHAR_ATTRIBUTE      equ         0x0f                  ; the colour byte for each character(Black on White)
 
 COLS                equ         80
 LINES               equ         25
