@@ -3,6 +3,8 @@
 ; It contains the boot sector signature and loads
 ; the second stage from disk
 
+KERNEL_SIZE equ 10                ; Approx Stage2 + Kernel size(No of sectors read)
+
 [bits 16]
 [org 0x7c00]                      ; sets the start address
 
@@ -13,7 +15,8 @@
 
     call load_disk
 
-    jmp 0x7e00                      ; Jump to second stage
+    mov dx, KERNEL_SIZE           ; No of sectors read. This is an appoximation
+    jmp 0x7e00                    ; Jump to second stage
 
 
 load_disk:

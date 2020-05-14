@@ -35,6 +35,7 @@ PhysicalMemorySize64:
 
 PhysicalMemoryMap:
     push bp
+    push edx
     mov bp, 0x0
     mov di, 0x1000
     mov eax, 0xE820
@@ -74,6 +75,7 @@ PhysicalMemoryMap:
 
 .done:
     mov [entry_count], bp               ; Store entry count
+    pop edx
     pop bp
     ret
 
@@ -81,6 +83,7 @@ PhysicalMemoryMap:
     mov si, Error_MSG
     call print_real
     mov [entry_count], word 0x0
+    pop edx
     pop bp
     stc
     ret

@@ -69,6 +69,7 @@ start:
     mov word [boot_info+multiboot_info.mem_upper], bx           ; Number of contiguous 64 KB blocks between 16 MB and 4 GB
 
     call PhysicalMemoryMap
+    mov [boot_info+multiboot_info.mmap_addr], word 0x1000
 
     call start_switch                                           ; Switch to stage3, which is the Protected Mode
 
@@ -83,6 +84,7 @@ begin_pm:
 
     mov eax, 0x2BADB002                         ; Magic Number to indicate to the operating system that it was loaded by a Multiboot-compliant boot loader  
     mov ebx, dword [boot_info]                  ; 32-bit physical address of the Multiboot information structure
+    push dx
     push boot_info                              ; Place the multiboot structure on the stack(it's the argument to the main function)
     call kernel_main                            ; Call our kernel
 
