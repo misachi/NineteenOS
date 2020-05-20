@@ -107,7 +107,7 @@ void itoa(uint32_t i, uint32_t base, char *buf)
     buf[opos] = 0;
 }
 
-void itoa_s(int32_t i, uint32_t base, char *buf)
+void itoa_s(uint32_t i, uint32_t base, char *buf)
 {
     if (base > 16)
         return;
@@ -148,6 +148,15 @@ int printf(const char *str, ...)
                 char *c = va_arg(args, char*);
                 char str[64];
                 strcpy(str, (const char *)c);
+                print(str);
+                i++;
+                break;
+            }
+            case 'u':
+            {
+                uint32_t c = va_arg(args, int);
+                char str[32] = {0};
+                itoa(c, 10, str);
                 print(str);
                 i++;
                 break;

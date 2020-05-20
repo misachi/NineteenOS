@@ -6,6 +6,7 @@
 void memcopy(char *str1, const char *str2, const uint16_t n);
 uint8_t strlen(const char *str);
 void memset16(uint16_t *block, char c, uint16_t n);
+void memset32(uint32_t *block, char c, uint16_t n);
 void memset8(char *block, char c, uint16_t n);
 void memset64(uint64_t *block, char c, uint16_t n);
 char *strcpy(char *dest, const char *src);

@@ -35,6 +35,13 @@ void memset16(uint16_t *block, char c, uint16_t n)
     }
 }
 
+void memset32(uint32_t *block, char c, uint16_t n) {
+    while(n--)
+    {
+        *block++ = (uint32_t)c;
+    }
+}
+
 void memset64(uint64_t *block, char c, uint16_t n)
 {
     while(n--)

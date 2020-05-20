@@ -36,5 +36,5 @@ typedef struct
     uint8_t framebuffer_type;
     uint32_t color_info;
 
-} multiboot_info;
+} __attribute__((packed)) multiboot_info;
 #endif

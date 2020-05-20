@@ -20,6 +20,7 @@ OBJ = ${SOURCES:.c=.o}
 CFLAGS := -m32 \
 		-std=c99 \
 		-Wall \
+		-Woverflow \
 		-Wpedantic \
 		-nostdlib -ffreestanding
 
@@ -35,7 +36,7 @@ bin/os_image: boot_sect.bin kernel.bin
 	cat $^ > $@
 
 run: bin/os_image
-	qemu-system-i386 -m 1G -d guest_errors -fda $<
+	qemu-system-i386 -d guest_errors -fda $<
 
 %.o: %.c
 	${CC} ${CFLAGS} -I ${INCLUDEDIRS} -c $< -o $@
