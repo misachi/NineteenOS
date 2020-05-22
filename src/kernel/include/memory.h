@@ -13,4 +13,5 @@ void unset_bit(uint32_t bit);
 int32_t free_block(void);
 void *kmalloc(uint32_t);
 void free(void *addr);
+void protect_kernel(uint32_t base, uint32_t size);
 #endif

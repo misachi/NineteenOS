@@ -107,7 +107,7 @@ void itoa(uint32_t i, uint32_t base, char *buf)
     buf[opos] = 0;
 }
 
-void itoa_s(uint32_t i, uint32_t base, char *buf)
+void itoa_s(int32_t i, uint32_t base, char *buf)
 {
     if (base > 16)
         return;

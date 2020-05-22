@@ -74,7 +74,7 @@ PhysicalMemoryMap:
     jmp .done
 
 .done:
-    mov [entry_count], bp               ; Store entry count
+    mov word [entry_count], bp               ; Store entry count
     pop edx
     pop bp
     ret

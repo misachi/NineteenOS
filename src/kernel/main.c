@@ -16,7 +16,7 @@ typedef struct address_range_desc {
 // This is the entry routine to the kernel
 void kernel_main(multiboot_info *memory_size, uint16_t ksize){
     uint16_t *count = (uint16_t *)0x8000;
-    uint16_t kernel_size = ksize*512;
+    uint32_t kernel_size = ksize*512;
     uint32_t phy_memory_size = 1024 + (memory_size->mem_lower * 1024) + (memory_size->mem_upper * 64 * 1024);
     address_range_desc_t *region = (address_range_desc_t *)memory_size->mmap_addr;
     clear_screen();
@@ -30,16 +30,20 @@ void kernel_main(multiboot_info *memory_size, uint16_t ksize){
     printf("\n\n                               Memory Regions");
     printf("\n                            ---------------------");
     init_physical_memory((uint32_t)0x100000+kernel_size, phy_memory_size);
-    for (uint8_t i = 0; i < *count; i++)
+    for (uint16_t i = 0; i < *count; i++)
     {
         printf("\n          Region(%i) | Memory Address(0x%x%x)| Length(0x%x%x) | Type(%i)", i+1, region[i].base_high, region[i].base_low, region[i].length_high, region[i].length_low, region[i].type);
         if (region[i].type == 1) {
             init_region(region[i].base_low, region[i].length_low);
         }
     }
+    protect_kernel((uint32_t)0x100000, kernel_size);
 
-    uint32_t *foo = kmalloc(sizeof(uint32_t));
-    uint32_t *bar = kmalloc(sizeof(uint32_t));
-    printf("\n 0x%x", foo);
-    printf("\n 0x%x", bar);
+    uint32_t *mem1 = kmalloc(sizeof(uint32_t));
+    uint32_t *mem2 = kmalloc(sizeof(uint32_t));
+    printf("\n 0x%x", mem1);
+    printf("\n 0x%x", mem2);
+    free((void *)mem2);
+    uint32_t *mem3 = (uint32_t *)kmalloc(sizeof(uint32_t));
+    printf("\n 0x%x", mem3);
 }

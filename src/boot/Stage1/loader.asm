@@ -3,7 +3,7 @@
 ; It contains the boot sector signature and loads
 ; the second stage from disk
 
-KERNEL_SIZE equ 10                ; Approx Stage2 + Kernel size(No of sectors read)
+KERNEL_SIZE equ 20                ; Approx Stage2 + Kernel size(No of sectors read)
 
 [bits 16]
 [org 0x7c00]                      ; sets the start address
