@@ -1,5 +1,5 @@
-#include <screen.h>
-#include <pic.h>
+#include "./include/screen.h"
+#include "./include/pic.h"
 
 void i86_initialize_pic()
 {

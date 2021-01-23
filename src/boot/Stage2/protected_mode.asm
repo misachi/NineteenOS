@@ -1,21 +1,5 @@
-[bits 16]                   ; We are still in 16-bit Real Mode
-
-start_switch:               ; Begin the swith to 32-bit Protected mode(PM)
-    cli                     ; Stop all interrupts
-    lgdt [gdtr_reg]         ; Load our GDT using our label from before into the gdt register
-
-    mov  eax, cr0           ; We turn on the first bit of control register(cr0) in order to
-                            ; switch to PM
-    or   eax, 0x1
-    mov  cr0, eax
-
-    jmp  0x08:pm_mode       ; Make a far jump to 32-bit PM segment. The purpose for this is to
-                            ; enable the cpu to flush all interrupts and register before
-                            ; moving to PM mode. 0x08 is the offset for the code descriptor. This sets
-                            ; the cs registers as well
-
 [bits 32]                   ; We are now in 32-bit Protected Mode
-
+global pm_mode
 pm_mode:                    ; Re-assign the segments appropriately. The segments assigned as previously
                             ; won't work as expected in PM mode. This means we have to manually re-assign
                             ; the segments correctly
@@ -31,3 +15,26 @@ pm_mode:                    ; Re-assign the segments appropriately. The segments
     mov esp, ebp
 
     call begin_pm
+
+begin_pm:
+    mov ebx, protected_mode_msg
+    call print_string_pm 
+
+    extern kernel_main
+
+    mov eax, 0x2BADB002                         ; Magic Number to indicate to the operating system that it was loaded by a Multiboot-compliant boot loader  
+    mov ebx, dword [boot_info]                  ; 32-bit physical address of the Multiboot information structure
+    push dx
+    push boot_info                              ; Place the multiboot structure on the stack(it's the argument to the main function)
+    call kernel_main                            ; Call our kernel
+
+; When our kernel returns, we ensure all interrupts are inactive before we
+; halt the system
+    cli
+    hlt
+
+
+%include "src/boot/Stage2/print_string_pm.asm"     ; 32bit mode
+%include "src/boot/Stage2/paging.asm"
+
+protected_mode_msg          db      0x0A, 0x0A, "Switched to Protected Mode", 0

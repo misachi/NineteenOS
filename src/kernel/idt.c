@@ -1,7 +1,7 @@
-#include <idt.h>
-#include <pic.h>
-#include <stdio.h>
-#include <string.h>
+#include "./include/pic.h"
+#include "./include/idt.h"
+#include "../Include/string.h"
+#include "../Include/stdio.h"
 
 void default_handler()
 {
@@ -30,7 +30,7 @@ void initialize_idt(uint16_t sel)
     idtp.limit = sizeof(struct idt_entry) * MAX_IDT_ENTRY - 1;
 
     // Set IDT blocks to 0
-    memset64((uint64_t *)&IDT[0], 0, sizeof(struct idt_entry)*MAX_IDT_ENTRY);
+    memset((uint64_t *)&IDT[0], 0, sizeof(struct idt_entry)*MAX_IDT_ENTRY);
 
     // Set all entries to the default handler above
     for (uint16_t i = 0; i < MAX_IDT_ENTRY; i++)

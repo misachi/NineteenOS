@@ -1,7 +1,6 @@
 ; Read disk sectors during boot process
 
 [bits 16]
-
 ; Reset floppy drive to ensure we read bytes
 ; from the first sector. Retry twice then exit(return to caller).
 ; This is done in speculation that the disk might not be ready at the
@@ -27,8 +26,6 @@ read_dsk:
     push dx
     mov ah, 0x02    ; Routine to access disk
     mov al, dh      ; We read dh sectors
-    mov cl, 0x02    ; Boot sector is in the first sector so
-                    ; we start reading from the second sector
 
     mov ch, 0x00    ; Cylinder(track) 0
     mov dh, 0x00    ; We will read from top head(0)
@@ -56,6 +53,15 @@ sector_mismatch:
 
 hang:
     jmp $
+
+map_kernel_1mb:
+    pusha
+    mov edi, 0x4000
+    mov esi, 0x9000
+    mov ecx, 14024
+    rep movsb
+    popa
+    ret
 
 %include "src/boot/Stage2/print_string.asm"        ; 16bit print
 

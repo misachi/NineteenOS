@@ -1,5 +1,5 @@
-#ifndef PIC_H
-#define PIC_H
+#ifndef _PIC_H
+#define _PIC_H
 
 #define MASTER_COMMAND      0x20
 #define MASTER_DATA         0x21

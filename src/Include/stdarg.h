@@ -1,6 +1,6 @@
 #ifndef STDARG_H
 #define	STDARG_H
-#include <va_list.h>
+#include "va_list.h"
 
 /* width of stack == width of int */
 #define	STACKITEM	int

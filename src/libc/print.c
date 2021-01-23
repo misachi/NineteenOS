@@ -1,11 +1,23 @@
-#include <screen.h>
-#include <string.h>
-#include <va_list.h>
-#include <stdarg.h>
+#include "../Include/string.h"
+#include "../kernel/include/screen.h"
+#include "../Include/va_list.h"
+#include "../Include/stdarg.h"
 
 uint8_t _CUR_X = 0;
 uint8_t _CUR_Y = 0;
 uint16_t *vid_memory = (uint16_t *)VIDEO_ADDRESS;
+
+void scroll(void) {
+    uint16_t attributeByte = (CYAN << 4) << 8; // Cyan background
+    uint16_t blank = 0x20 | (attributeByte);
+    uint32_t temp;
+    if(_CUR_Y >= 25) {
+        temp = _CUR_Y - 25 + 1;
+        memcopy((char *)vid_memory, (char *)vid_memory + temp * 80, (25 - temp) * 80 * 2);
+        memset(vid_memory + (25 - temp) * 80, blank, 80);
+        _CUR_Y = 25 - 1;
+    }
+}
 
 void mov_cursor()
 {
@@ -51,6 +63,7 @@ void print_char(char c)
         _CUR_X = 0;
         _CUR_Y++;
     }
+    // scroll();
     mov_cursor();
 }
 

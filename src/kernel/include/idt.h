@@ -1,6 +1,6 @@
 #ifndef IDT_H
 #define IDT_H
-#include <stdint.h>
+#include "../../Include/stdint.h"
 
 #define MAX_IDT_ENTRY 256
 #define FLAG 0x8E

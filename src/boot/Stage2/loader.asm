@@ -3,7 +3,6 @@
 ; Boots into our C Kernel
 
 [bits 16]
-
 ; This should be included before we create a multiboot structure instance
 ; else, for some reason, we get an error <error: non-constant argument supplied to TIMES>
 %include "src/boot/Stage2/multiboot.asm"
@@ -43,7 +42,7 @@ istruc multiboot_info
     at multiboot_info.color_info,               dd  0
 iend
 
-start:
+stage2:
     mov [BOOT_DRIVE], dl
 
     cli	                            ; clear interrupts
@@ -71,34 +70,30 @@ start:
     call PhysicalMemoryMap
     mov [boot_info+multiboot_info.mmap_addr], word 0x1000
 
-    call start_switch                                           ; Switch to stage3, which is the Protected Mode
+    call switch_pm                                           ; Switch to stage3, which is the Protected Mode
 
     jmp $
 
-[bits 32]
-begin_pm:
-    mov ebx, protected_mode_msg
-    call print_string_pm
 
-    extern kernel_main
+; We are still in 16-bit Real Mode
+switch_pm:                  ; Begin the swith to 32-bit Protected mode(PM)
+    cli                     ; Stop all interrupts
+    lgdt [gdtr_reg]         ; Load our GDT using our label from before into the gdt register
 
-    mov eax, 0x2BADB002                         ; Magic Number to indicate to the operating system that it was loaded by a Multiboot-compliant boot loader  
-    mov ebx, dword [boot_info]                  ; 32-bit physical address of the Multiboot information structure
-    push dx
-    push boot_info                              ; Place the multiboot structure on the stack(it's the argument to the main function)
-    call kernel_main                            ; Call our kernel
+    mov  eax, cr0           ; We turn on the first bit of control register(cr0) in order to
+                            ; switch to PM
+    or   eax, 0x1
+    mov  cr0, eax
 
-; When our kernel returns, we ensure all interrupts are inactive before we
-; halt the system
-    cli
-    hlt
+    jmp  0x08:pm_mode       ; Make a far jump to 32-bit PM segment. The purpose for this is to
+                            ; enable the cpu to flush all interrupts and register before
+                            ; moving to PM mode. 0x08 is the offset for the code descriptor. This sets
+                            ; the cs registers as well
 
 %include "src/boot/Stage2/gdt.asm"
 %include "src/boot/Stage2/print_string.asm"        ; 16bit print
-%include "src/boot/Stage2/print_string_pm.asm"     ; 32bit mode
-%include "src/boot/Stage2/protected_mode.asm"
 %include "src/boot/Stage2/memory.asm"
+%include "src/boot/Stage2/protected_mode.asm"
 
-BOOT_DRIVE         db      0
-protected_mode_msg db      0x0A, 0x0A, "Switched to Protected Mode", 0
-real_mode_msg      db      "Booting into Real Mode", 0
+BOOT_DRIVE                  db      0
+real_mode_msg               db      "Booting into Real Mode", 0
