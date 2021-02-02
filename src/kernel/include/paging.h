@@ -2,6 +2,8 @@
 #define _PAGING_H
 
 #include "../../Include/stdint.h"
+#include "../../Include/stdbool.h"
+#include "pmm.h"
 
 #define PAGE_ALIGN 4096
 #define PAGE_ALIGN_MASK (PAGE_ALIGN - 1)
@@ -25,6 +27,7 @@ enum {
 };
 
 typedef uint32_t page_entry_t;
+typedef uint32_t page_table_t;
 
 /* Page Directory Entry */
 enum {
@@ -43,47 +46,28 @@ enum {
 
 typedef uint32_t page_directory_t;
 
-inline uint8_t is_page_aligned(page_entry_t e) {
-    return e & PAGE_ALIGN_MASK;
-}
+extern myBool is_page_aligned(page_entry_t e);
 
-inline void page_align_entry(page_entry_t *e) {
-    *e = (*e + PAGE_ALIGN_MASK) & ~PAGE_ALIGN_MASK;
-}
+extern void page_align_entry(page_entry_t *e);
 
-inline page_entry_t get_page_table_idx(uint32_t v_addr) {
-    return (v_addr >> 12) & 1023;
-}
+extern page_entry_t get_page_table_idx(uint32_t v_addr);
 
-inline page_directory_t get_page_directory_idx(uint32_t v_addr) {
-    return (v_addr >> 22) & 1023;
-}
+extern page_directory_t get_page_directory_idx(uint32_t v_addr);
 
-inline uint32_t get_page_physical_addr(uint32_t v_addr) {
-    return v_addr & PAGE_ALIGN_MASK;
-}
+extern physical_addr_t get_page_physical_addr(uint32_t v_addr);
 
-inline void set_entry_bit(page_entry_t *e, page_entry_t bit) {
-    *e |= bit;
-}
+extern void set_entry_bit(page_entry_t *e, page_entry_t bit);
 
-inline void unset_entry_bit(page_entry_t *e, page_entry_t bit) {
-    *e &= ~bit;
-}
+extern void unset_entry_bit(page_entry_t *e, page_entry_t bit);
 
-inline page_entry_t get_entry_physical_addr(page_entry_t e) {
-    return PTE_PHYS_ADR & e;
-}
+extern physical_addr_t get_entry_physical_addr(page_entry_t e);
 
-inline void set_entry_physical_addr(page_entry_t *e, uint32_t addr) {
-    *e = (*e << 12) | addr;
-}
+extern void set_entry_physical_addr(page_entry_t *e, uint32_t addr);
 
 void create_page_directory();
 page_entry_t *create_page_table();
+void map_page_table(page_directory_t *pd, page_entry_t *e);
 void config_paging();
 
-page_entry_t *get_page_table(uint32_t addr);
-page_directory_t *get_page_directory(uint32_t addr);
-
+page_directory_t *get_page_directory();
 #endif

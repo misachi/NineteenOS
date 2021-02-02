@@ -42,16 +42,16 @@ void kernel_main(multiboot_info *memory_size, uint16_t ksize){
     protect_kernel((uint32_t)0x100000, kernel_size);
 
     config_paging();
-    uint32_t *mem1 = kmalloc(sizeof(uint32_t));
-    uint32_t *mem2 = kmalloc(sizeof(uint32_t));
-    uint32_t *mem3 = kmalloc(sizeof(uint32_t));
+    uint32_t *mem1 = kmalloc(3);
+    // uint32_t *mem2 = kmalloc(1);
+    // uint32_t *mem3 = kmalloc(1);
     // printf("\n\n            0x%x", mem1);
     // printf("\n              0x%x", mem2);
     // printf("\n              0x%x", mem3);
 
     // debug_mem();
-    free(mem2);
-    free(mem1);
-    free(mem3);
+    // free(mem2);
+    // free(mem1);
+    // free(mem3);
     debug_mem();
 }

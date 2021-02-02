@@ -25,7 +25,7 @@ void idt_gate(uint8_t num, irq_handler irq, uint16_t sel, uint8_t flags)
 
 void initialize_idt(uint16_t sel)
 {
-    void i86_initialize_pic();
+    i86_initialize_pic();
     idtp.base = (uint32_t)&IDT;
     idtp.limit = sizeof(struct idt_entry) * MAX_IDT_ENTRY - 1;
 
