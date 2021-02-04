@@ -2,6 +2,8 @@
 #include "include/paging.h"
 #include "../Include/string.h"
 #include "../Include/stdbool.h"
+#include "../Include/stdint.h"
+#include "include/vmm.h"
 
 extern void load_directory(page_directory_t *directory);
 extern void enable_paging();
@@ -52,20 +54,13 @@ void create_page_directory() {
     page_directory = (page_directory_t *)kmalloc(1);
     memset(page_directory, 0, PAGE_SIZE);
 
-    for(page_directory_t i = 0; i < PAGE_DIRECTORY_SIZE; i++)
+    for(size_t i = 0; i < PAGE_DIRECTORY_SIZE; i++)
         set_entry_bit(&page_directory[i], PDE_BIT_READ_WRITE);
 }
 
 page_table_t *create_page_table() {
     page_table_t *page_table = kmalloc(1);
     memset(page_table, 0, PAGE_SIZE);
-
-    // for(page_entry_t i = 0; i < PAGE_TABLE_SIZE; i++) {
-    //     page_entry_t *e = 0;
-    //     set_entry_bit(&page_table[i], PTE_BIT_PRESENT);
-    //     set_entry_bit(&page_table[i], PTE_BIT_READ_WRITE);
-    //     set_entry_physical_addr(&page_table[i], (page_entry_t)e);
-    // }
     return page_table;
 }
 
@@ -73,10 +68,21 @@ void config_paging() {
     create_page_directory();
     page_table_t *page_table = create_page_table();
 
-    set_entry_bit(&page_directory[0], PDE_BIT_PRESENT);
-    set_entry_bit(&page_directory[0], PDE_BIT_READ_WRITE);
-    set_entry_physical_addr(&page_directory[0], (page_table_t)page_table);
+    /* We identity map the for first page table(4mb) */
+    for (size_t i = 0, frame = 0x0, virt = 0x00000000; i < PAGE_TABLE_SIZE; i++, frame+=0x1000, virt+=0x1000)
+    {
+        page_entry_t entry = 0;
+        // &page_table[get_page_table_idx(virt)];
+        set_entry_bit(&entry, PTE_BIT_PRESENT);
+        set_entry_physical_addr(&entry, frame);
+        page_table[get_page_table_idx(virt)] = entry;
+    }
 
-    load_directory(&page_directory[0]);
+    page_directory_t *dir = &page_directory[get_page_directory_idx(0x00000000)];
+    set_entry_bit(dir, PDE_BIT_PRESENT);
+    set_entry_bit(dir, PDE_BIT_READ_WRITE);
+    set_entry_physical_addr(dir, (page_table_t)page_table);
+
+    load_directory(dir);
     enable_paging();
 }
