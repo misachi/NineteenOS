@@ -115,7 +115,7 @@ void *kmalloc(uint32_t size) {
         }
         for (uint32_t i = 0; i < size; i++)
         {
-            set_bit(free_bit+1);
+            set_bit(free_bit+i);
         }
         used_memory_blocks+=size;
     }
