@@ -25,13 +25,13 @@
 
 #include "../../Include/stdint.h"
 
-// Use inline assembly to access device driver ports
-// Read and write data to devices
-static inline uint8_t port_byte_in(uint16_t port)
+/*  Use inline assembly to access device driver ports
+    Read and write data to devices */
+static inline uint16_t port_byte_in(uint16_t port)
 {
-    // A handy C wrapper function that reads a byte from the specified port
-    // "=a" ( result ) means : put AL register in variable RESULT when finished
-    // "d" ( port ) means : load EDX with port
+    /*  A handy C wrapper function that reads a byte from the specified port
+        "=a" ( result ) means : put AL register in variable RESULT when finished
+        "d" ( port ) means : load EDX with port */
     uint16_t result;
     __asm__("in %%dx , %%al " : "=a"(result) : "d"(port));
     return result;

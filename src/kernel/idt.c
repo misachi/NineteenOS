@@ -3,6 +3,11 @@
 #include "../Include/string.h"
 #include "../Include/stdio.h"
 
+// Load our IDT
+static void inline install_idt(void){
+	__asm__ volatile("lidt %0" :: "m" (idtp));
+}
+
 void default_handler()
 {
     print("\tUnhandled exception Error!!!");

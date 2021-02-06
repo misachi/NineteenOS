@@ -30,7 +30,7 @@ void kernel_main(multiboot_info *memory_size, uint16_t ksize){
     printf("\n\n                Kernel Size(bytes): %d", kernel_size);
     // printf("\n\n                               Memory Regions");
     printf("\n                            ---------------------");
-    init_physical_memory((uint32_t)0x100000+kernel_size, phy_memory_size);
+    init_physical_memory((uint32_t)0x9000+kernel_size, phy_memory_size);
     for (uint16_t i = 0; i < *count; i++)
     {
         // printf("\n          Region(%i) | Memory Address(0x%x)| Length(0x%x) | Type(%i)", i+1, region[i].base_low, region[i].length_low, region[i].type);
@@ -39,7 +39,7 @@ void kernel_main(multiboot_info *memory_size, uint16_t ksize){
             init_region(region[i].base_low, region[i].length_low);
         }
     }
-    protect_kernel((uint32_t)0x100000, kernel_size);
+    protect_kernel((uint32_t)0x9000, kernel_size);
 
     // config_paging();
     uint32_t *mem1 = kmalloc(1);

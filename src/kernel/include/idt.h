@@ -40,11 +40,6 @@ struct idt_entry IDT[256];
 // Our IDT pointer register
 struct idtr idtp;
 
-// Load our IDT
-static void inline install_idt(void){
-	__asm__ volatile("lidt %0" :: "m" (idtp));
-}
-
 void idt_gate(uint8_t num, irq_handler irq, uint16_t sel, uint8_t flags);
 
 // Our default Interrupt Routine(in case NONE is provided)
